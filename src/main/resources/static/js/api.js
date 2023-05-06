@@ -75,7 +75,7 @@ function getMovieByImdbId(imdbId){
 	"method": "GET",
 	"headers": {
 		"x-rapidapi-host": "data-imdb1.p.rapidapi.com",
-		"x-rapidapi-key": "d6f5eaacb1mshf1db0cf7f0b0622p1bf671jsn578b35b8cbc3"
+		"x-rapidapi-key": "Your key here"
 	}
     };
 
