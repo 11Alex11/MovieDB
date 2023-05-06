@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>MovieDB - API</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link href="MovieDB.css" rel="stylesheet" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous" async></script>
+        <script src="js/api.js"></script>
+
+    <!-- HEADER -->
+    </head>
+    <body class="bg-dark">
+        <div class="container">
+        <div th:replace="fragments/header :: header">
+            
+        </div>
+        <!-- END HEADER -->
+
+        <div class =" bg-blue mt-4 ">
+            <div>
+                <h1 class="text-light font-weight-bold p-2 ms-4">Api</h1>
+
+                <div class="input-group mb-2">
+                    <select class="input-group-text ms-4" id="searchApiFor" th:name="searchApiFor">
+                        <option value="1">Get Movie by Title</option>
+                        <option value="2">Get Actor by Name</option>
+                    </select>
+
+                    <input class="form-control me-2" id="searchText" type="search" placeholder="Search" aria-label="Search">
+                    
+                    <button id="searchButton" class="btn btn-outline-success me-2">Search</button>
+                          
+                </div>
+                <nav aria-label="Page navigation"  class="ms-4">
+                          <ul class="pagination">
+                            <li class="page-item" id="firstPage">
+                              <button class="page-link"  >
+                                <span aria-hidden="true">&laquo;</span>
+                                
+                              </button>
+                            </li>
+                            
+                            <li>
+                                 <ul class=" pagination " id="pageNav">
+                                    
+                                 </ul>
+                            </li>
+                            <li class="page-item">
+                              <button class="page-link" id="lastPage" >
+                                <span aria-hidden="true">&raquo;</span>
+                              </button>
+                            </li>
+                          </ul>
+                    
+                        </nav>
+                
+                <div class=" pt-2 bg-lightblue"></div>
+                <ul class="list-group" id="errorMessages"></ul>
+            </div>
+            
+            <template id="movieTemplate">
+                <form action="addApiMovie" method="POST" >
+                <div class="movieDiv row bg-lightblue m-4 p-2 rounded-3 ">
+                    <input name="movieImdbId" class='movieImdbIdIn' type="hidden">
+                    <input name="movieReleaseDate" class="movieReleaseDateIn" type="hidden">
+                    <input name="movieContentRating" class="movieContentRatingIn" type="hidden">
+                    <input name="movieLength" class="movieLengthIn" type="hidden">
+                    <input name="movieUserRating" class="movieUserRatingIn" type="hidden">
+                    <input name="moviePopularity" class="moviePopularityIn" type="hidden">
+                    <input name="movieTitle" class="movieTitleIn" type="hidden">
+                    <input name="movieDescription" class="movieDescriptionIn" type="hidden">
+                    <input name="moviePlot" class="moviePlotIn" type="hidden">
+                    <input name="movieVideoUrl" class="movieVideoUrlIn" type="hidden">
+                    <input name="movieImageUrl" class="movieImageUrlIn" type="hidden">
+                    
+                    <div class="row col-4 text-center align-items-center"> 
+                        <div>
+                            <img name="movieImageUrl" class="movieImage img-fluid" alt="Movie Image">
+                        
+                            <div class="text-center">
+                               <span name="movieReleaseDate" class="movieReleaseDate text-light text-bold">Release Date</span>
+                               <span class="text-light"> - </span>
+                               <span name="movieContentRating" class="movieContentRating text-light text-bold">Content Rating</span>
+                               <span class="text-light"> - </span>
+                               <span name="movieLength" class="movieLength text-light text-bold">Runtime</span>
+                            </div>
+                            </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-auto">
+                                <span class="text-light">Rating</span>
+                                <span name="movieUserRating" class="movieUserRating text-light">Int Rating</span>
+                                <span class="text-light">/10</span>
+                            </div>
+                            <div class="col-auto">
+                                <span class="text-light">Popularity </span>
+                                <span class="text-light">#</span>
+                                <span name="moviePopularity" class="moviePopularity text-light">Popularity</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h3 name="movieTitle" class="movieTitle text-warning text-bold">Title</h3>
+                            <p name="movieDescription" class="movieDescription text-light">Description</p>
+                        </div>
+                        <div class=" pt-1 bg-light"></div>
+                        <div class ="row">
+                            <div class ="col-2">
+                                <div class="text-light">Directors</div>
+                                <div class="text-light">Writers</div>
+                                <div class="text-light">Actors</div>
+                            </div>
+                            <div class ="col-10">
+                                <div  class="directorDiv text-light row"></div>
+                                <div  class="writerDiv text-light row"></div>
+                                <div  class="actorDiv text-light row"></div>
+                            </div>
+                        </div>
+                        <div class=" pt-1 bg-light"></div>
+                        <div class="row">
+                            <div class="row col-8 genresDiv">
+
+                            </div>
+                        </div>
+                        <div class="float-end">
+                            <button class="btn btn-success" >
+                                Import
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+                <form>
+                </template>
+            
+            <template id="castTemplate">
+                <form action="addApiCastMember" method="POST">
+                <div class="castDiv row bg-lightblue m-4 p-2 rounded-3 ">
+                    
+                    <input name="imdbId" class='castImdbId' type="hidden">
+                    <input name="imageUrl" class="castImageUrlIn" type="hidden">
+                    <input name="bio" class="castBioIn" type="hidden">
+                    <input name="bioFull" class="castFullBioIn" type="hidden">
+                    <input name="name" class="castNameIn" type="hidden">
+                    <input name="birthdate" class="castBirthdateIn" type="hidden">
+                    <input name="birthplace" class="castBirthplaceIn" type="hidden">
+                    
+                    <div class="row col-4 text-center align-items-center"> 
+                        <div>
+                            <img class="castImage img-fluid" alt="Cast Image">
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="row">
+                            <h3 class="castName text-warning text-bold">Name</h3>
+                            <p class="castBio text-light">Bio</p>
+                            <p hidden class="castFullBio">Full Bio</p>
+                        </div>
+                        <div class=" pt-1 bg-light"></div>
+                        <div class ="row mt-2 mb-2">
+                            <div class ="col-2">
+                                <div class="text-light">Birthdate</div>
+                                <div class="text-light">Birthplace</div>
+                            </div>
+                            <div class ="col-10">
+                                <div>
+                                    <p  class="castBirthdate text-light m-0"></p>
+                                </div>
+                                <div>
+                                <p  class="castBirthplace text-light m-0"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="float-end">
+                            <button class="btn btn-success" type="submit" >
+                                Import
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+                    </form>
+                </template>
+            
+            <template id="castMemberTemplate">
+                <div class="castMemberDiv col-auto">
+                
+                
+                    <a  class="castMemberName me-4">Sam Raimi</a>
+                    <p class="castMemberRole font-italic">Role</p>
+                    
+                    <input name="castImdbId" type="hidden" class="castImdbIdIn">
+                    <input name="castMemberName" type="hidden" class="castMemberNameIn">
+                    <input name="castMemberRole" type="hidden" class="castMemberRoleIn">
+
+                </div>
+
+            </template>
+            
+            <template id="genreTemplate">
+                <div class="genreDiv col-auto my-auto mt-3 ms-4 border border-light rounded-3 justify-content-center">
+                <input name="genreName" type="hidden" class="genreNameIn">
+                <input type="hidden" class="genreId">
+                    <p name="genreName" class="genreName text-light m-0 ">Role</p>
+                </div>
+            </template>
+            
+            <div class =" bg-blue mt-4 pb-2 mb-4" id="mainDiv">
+                
+            </div>
+        </div>
+    </body>
+</html>

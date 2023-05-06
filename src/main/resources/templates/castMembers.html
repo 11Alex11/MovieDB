@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>MovieDB</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link href="MovieDB.css" rel="stylesheet" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous" async></script>
+    <!-- HEADER -->   
+    </head>    
+    <body class="bg-dark">
+        <div class="container">
+        <div th:replace="fragments/header :: header">
+            
+        </div>
+        <!-- END HEADER -->   
+
+        
+        
+        <div class =" bg-blue mt-4">
+            <div class="row p-0 m-0">
+                <h1 class="text-light font-weight-bold p-2 ms-4">Cast Members</h1>
+                <div class=" pt-2 bg-lightblue"></div>
+            </div>
+            
+            <div class =" bg-blue mt-4 pb-2 mb-4" id="mainDiv">
+                <div th:each="castMember : ${castMembers}" class="castDiv row bg-lightblue m-4 p-2 rounded-3 ">
+                    <input name='id' th:value="${castMember.id}"type="hidden">
+                    <div class="row col-4 text-center align-items-center"> 
+                        <div>
+                            <img th:src="${castMember.imageUrl}" class="castImage img-fluid" alt="Cast Image">
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="row">
+                            <a class="text-warning " th:href="@{/castMemberInfo(id=${castMember.id})}"><h3 th:text="${castMember.name}" class="castName text-warning text-bold">Name</h3></a>
+                            <p th:text="${castMember.bio}" class="castBio text-light">Bio</p>
+                            <p th:text="${castMember.bioFull}" hidden class="castFullBio">Full Bio</p>
+                        </div>
+                        <div class=" pt-1 bg-light"></div>
+                        <div class ="row mt-2 mb-2">
+                            <div class ="col-2">
+                                <div class="text-light">Birthdate</div>
+                                <div class="text-light">Birthplace</div>
+                            </div>
+                            <div class ="col-10">
+                                <div>
+                                    <p th:text="${#temporals.format(castMember.birthdate, 'MMM d, yyyy')}" class="castBirthdate text-light m-0"></p>
+                                </div>
+                                <div>
+                                    <p th:text="${castMember.birthplace}" class="castBirthplace text-light m-0"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

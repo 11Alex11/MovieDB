@@ -1,0 +1,38 @@
+h1{
+    font-weight: bold;
+}
+*{
+    font-family: "Calibri"
+}
+.bg-blue{
+    background-color: #1f1f27;
+}
+
+.bg-lightblue{
+    background-color: #2a2a38;
+}
+
+.superhero{
+    color: #88c97c;
+}
+
+.supervillain{
+    color: #c97c7c;
+}
+
+.text-bold{
+    font-weight: bold;
+}
+
+.dropdown-lg{
+        font-size: 1.8em;
+
+}
+
+img {
+  height:100%;
+}
+
+.font-italic{
+    font-style: italic;
+}
